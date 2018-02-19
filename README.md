@@ -8,6 +8,7 @@
 - Rút gọn link thành subdomain
 - Có giao diện điều khiển
 - Có đếm số lượt truy cập/link
+- Có bug (nhưng chưa tìm ra)
 
 # Yêu cầu
 
