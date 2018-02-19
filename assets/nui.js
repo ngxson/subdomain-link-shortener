@@ -9,9 +9,9 @@ function loadList() {
 		dataType: "json",
 		success: function(data) {
 			nui_list = data;
-			var html = "";
+			var html = (data.length == 0 ? "<p>Chưa có link nào cả</p>" : "");
 			data.forEach((obj, i) => {
-				html += `<p id=""><b>${escapeHtml(obj.name)}</b> | Số lượt click: ${escapeHtml(obj.count)} | 
+				html += `<p><b>${escapeHtml(obj.name)}</b> | Số lượt click: ${escapeHtml(obj.count)} | 
 								<a href="${escapeLink(obj.link)}" target="_blank">Tới link gốc</a> |
 								<a href="javascript:copyLink(${i})">Copy link ngắn</a>
 								</p>`;
@@ -37,7 +37,7 @@ function doAdd() {
 				nui_main._show("add-success");
 				loadList();
 			} else {
-				if (data.msg.indexOf("Duplicate")) alert("Lỗi: Tên link này đã có rồi");
+				if (data.msg.indexOf("Duplicate") != -1) alert("Lỗi: Tên link này đã có rồi");
 				else alert(data.msg);
 				nui_main._show("add");
 			}
@@ -48,6 +48,24 @@ function doAdd() {
 		}
 	});
 }
+
+$('#form-add').submit(function (evt) {
+	evt.preventDefault();
+});
+
+var nui_add_ok = false;
+$("#add-warning").hide();
+$("#name").on("change keyup paste click", function() {
+	if ($(this).val() == "") {
+		nui_add_ok = false;
+	} else if (/^[0-9a-zA-Z\\-]{1,120}$/.test($(this).val())) {
+		nui_add_ok = true;
+		$("#add-warning").hide();
+	} else {
+		nui_add_ok = false;
+		$("#add-warning").show();
+	}
+});
 
 function copySuccess() {
 	copyTextToClipboard($("#link-success").val());
@@ -87,6 +105,11 @@ function doLogin() {
 		}
 	});
 }
+
+$('#form-login').submit(function (evt) {
+	evt.preventDefault();
+	doLogin();
+});
 
 function doLogout() {
 	var date = new Date();

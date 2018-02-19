@@ -12,7 +12,7 @@
 	$GLOBALS['PWD_MANAGER'] = "nhue123";
 	
 	// Có cho phép ghi đè lên link cũ hay không
-	$GLOBALS['ALLOW_OVERWRITE'] = false;
+	$GLOBALS['ALLOW_OVERWRITE'] = true;
 	
 	// Thông số MySQL
 	$GLOBALS['MYSQL_PARAMS'] = array(

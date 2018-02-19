@@ -5,7 +5,7 @@ include __DIR__.'/auth.php';
 include __DIR__.'/db.php';
 
 $GLOBALS['MODE'] = 'REDIRECT';
-if ($_SERVER['SERVER_NAME'] == strtolower("manager.".$GLOBALS['BASE_DOMAIN']) ) {
+if ($_SERVER['SERVER_NAME'] == strtolower(/*"manager.".*/$GLOBALS['BASE_DOMAIN']) ) {
 	$GLOBALS['is_auth'] = isAuth();
 	if ($is_auth) {
 		$GLOBALS['MODE'] = 'MANAGER';
@@ -78,7 +78,7 @@ if ($_SERVER['SERVER_NAME'] == strtolower("manager.".$GLOBALS['BASE_DOMAIN']) ) 
 						<!-- Login -->
 							<article id="login">
 								<h2 class="major">Đăng nhập</h2>
-								<form id="form-login">
+								<form id="form-login" method="post">
 									<input type="hidden" name="action" value="login"></input>
 									<div class="field">
 										<label for="password">Mật khẩu</label>
@@ -93,7 +93,7 @@ if ($_SERVER['SERVER_NAME'] == strtolower("manager.".$GLOBALS['BASE_DOMAIN']) ) 
 						<!-- Loading -->
 							<article id="loading">
 								<h2 class="major">Xin chờ...</h2>
-								<p id=""></p>
+								<p><center><img src="assets/loading.gif" height="50px" /></center></p>
 							</article>
 <?php if ($GLOBALS['MODE'] == 'MANAGER') { ?>
 						<!-- List -->
@@ -106,15 +106,23 @@ if ($_SERVER['SERVER_NAME'] == strtolower("manager.".$GLOBALS['BASE_DOMAIN']) ) 
 						<!-- Add -->
 							<article id="add">
 								<h2 class="major">Thêm link mới</h2>
-								<form id="form-add">
+								<form id="form-add" method="post">
 									<input type="hidden" name="action" value="add"></input>
 									<div class="field">
 										<label for="message">Link gốc</label>
 										<textarea name="link" id="link"></textarea>
 									</div>
 									<div class="field">
-										<label for="message">Tên link rút gọn (....<?php echo $GLOBALS['BASE_DOMAIN']; ?>)</label>
-										<textarea name="name" id="name"></textarea>
+										<label for="message">Tên link rút gọn</label>
+										<div class="field half" style="margin: 0 0 0 0; padding: 0 0 0 0;">
+											<input type="text" name="name" id="name"></input>
+										</div>
+										<div class="field half">
+											<div style="width: 100%; height: 2.75rem; display: table-cell; vertical-align: middle;">
+												.<?php echo $GLOBALS['BASE_DOMAIN']; ?>
+											</div>
+										</div>
+										<p id="add-warning"><b style="color: #ff5151">Link chỉ được chứa các ký tự không dấu, không cách, dấu gạch ngang (-) hoặc số.</b></p>
 									</div>
 									<ul class="actions">
 										<li><input type="button" value="Thêm" class="special" onclick="doAdd();"/></li>

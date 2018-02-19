@@ -11,7 +11,7 @@ $GLOBALS['nui_conn']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 function doAdd($name, $link) {
 	$sql = "INSERT INTO links (timestamp, name, link) VALUES (NOW(),:name,:link)";
 	if ($GLOBALS['ALLOW_OVERWRITE']) {
-		$sql .= " ON DUPLICATE KEY UPDATE link=VALUES(link),timestamp=VALUES(tempstamp)";
+		$sql .= " ON DUPLICATE KEY UPDATE link=VALUES(link),timestamp=NOW()";
 	}
 	$stmt = $GLOBALS['nui_conn']->prepare($sql);
 	$stmt->bindParam(':name', $name);
